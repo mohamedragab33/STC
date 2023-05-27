@@ -5,13 +5,29 @@ import com.example.demo.data.dtos.FolderCreateRequest;
 import com.example.demo.data.dtos.SpaceCreateRequest;
 import com.example.demo.data.dtos.SpaceDto;
 import com.example.demo.data.entities.*;
+import com.example.demo.data.entities.Folder;
+import com.example.demo.data.entities.Item;
+import com.example.demo.data.entities.Permission;
+import com.example.demo.data.entities.PermissionGroup;
+import com.example.demo.data.entities.Space;
 import com.example.demo.data.enums.ItemType;
 import com.example.demo.repository.*;
+import com.example.demo.repository.FileRepository;
+import com.example.demo.repository.FolderRepository;
+import com.example.demo.repository.ItemRepository;
+import com.example.demo.repository.PermissionGroupRepository;
+import com.example.demo.repository.PermissionRepository;
+import com.example.demo.repository.SpaceRepository;
+
+import java.io.ByteArrayInputStream;
+
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.web.multipart.MultipartFile;
@@ -21,11 +37,17 @@ import java.nio.file.FileAlreadyExistsException;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 @ContextConfiguration(classes = {FilesService.class})
 @ExtendWith(SpringExtension.class)
 class FilesServiceTest {
+    @MockBean
+    private FileRepository fileRepository;
+
     @Autowired
     private FilesService filesService;
 
@@ -43,7 +65,6 @@ class FilesServiceTest {
 
     @MockBean
     private SpaceRepository spaceRepository;
-
 
 
 
@@ -136,6 +157,16 @@ class FilesServiceTest {
         verify(group).getGroup_name();
     }
 
+    /**
+     * Method under test: {@link FilesService#save(MultipartFile, Item)}
+     */
+    @Test
+    void testSave() throws IOException {
+        MockMultipartFile file = new MockMultipartFile("Name", new ByteArrayInputStream("AXAXAXAX".getBytes("UTF-8")));
+
+        assertThrows(RuntimeException.class, () -> filesService.save(file, new Item()));
+    }
+
 
     /**
      * Method under test: {@link FilesService#save(MultipartFile, Item)}
@@ -156,7 +187,6 @@ class FilesServiceTest {
         assertThrows(RuntimeException.class, () -> filesService.save(file, new Item()));
         verify(file).getInputStream();
     }
-
 
 
     /**
@@ -224,7 +254,6 @@ class FilesServiceTest {
         verify(permissionRepository).findByUserEmail(Mockito.<String>any());
         verify(group).getGroup_name();
     }
-
 
     /**
      * Method under test: {@link FilesService#createSpace(SpaceCreateRequest)}
