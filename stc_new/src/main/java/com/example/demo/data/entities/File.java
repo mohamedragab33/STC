@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "files_tb")
+@Table(name = "files")
 public class File {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -20,7 +20,7 @@ public class File {
     private String fileType;
 
     @OneToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "item_id", nullable = false , referencedColumnName = "id")
+    @JoinColumn(name = "item_id", nullable = false)
     private Item item;
 
 }

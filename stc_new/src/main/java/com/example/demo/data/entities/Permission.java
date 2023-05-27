@@ -18,11 +18,11 @@ public class Permission {
     @Column(name = "USER_EMAIL", unique = true, nullable = false)
     private String userEmail;
 
-    @Column(name = "PERMISSIONS_LEVEL",  nullable = false)
-    private String permissionLevel;
-
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "GROUP_ID", nullable = false)
     private PermissionGroup group;
+
+    @Column(name = "PERMISSIONS_LEVEL",  nullable = false)
+    private String permissionLevel;
 
 }

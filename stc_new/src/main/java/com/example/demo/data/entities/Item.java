@@ -16,16 +16,16 @@ public class Item {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-
-    private ItemType type;
-
     private String name;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "permission_group_id", nullable = false)
     private PermissionGroup permissionGroup;
 
+    private ItemType type;
+
     @ManyToOne(optional = true, fetch = FetchType.LAZY)
-    @JoinColumn(name = "parent_id", referencedColumnName = "id")
+    @JoinColumn(name = "parent_id", referencedColumnName = "ID")
     private Item parentItem;
+
 }

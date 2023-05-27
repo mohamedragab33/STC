@@ -12,11 +12,8 @@ import lombok.NoArgsConstructor;
 @Table(name = "permission_groups")
 public class PermissionGroup {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-
-    @Column(name = "groupName")
-    private String groupName;
+    private String group_name;
 
 }
