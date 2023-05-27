@@ -1,44 +1,27 @@
 package com.example.demo.service;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-
 import com.example.demo.data.dtos.FileCreateRequest;
 import com.example.demo.data.dtos.FolderCreateRequest;
 import com.example.demo.data.dtos.SpaceCreateRequest;
 import com.example.demo.data.dtos.SpaceDto;
-import com.example.demo.data.entities.Folder;
-import com.example.demo.data.entities.Item;
-import com.example.demo.data.entities.Permission;
-import com.example.demo.data.entities.PermissionGroup;
-import com.example.demo.data.entities.Space;
+import com.example.demo.data.entities.*;
 import com.example.demo.data.enums.ItemType;
-import com.example.demo.repository.FolderRepository;
-import com.example.demo.repository.ItemRepository;
-import com.example.demo.repository.PermissionGroupRepository;
-import com.example.demo.repository.PermissionRepository;
-import com.example.demo.repository.SpaceRepository;
-
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
-import java.nio.file.FileAlreadyExistsException;
-
-import java.util.Optional;
-
-import org.junit.jupiter.api.Disabled;
+import com.example.demo.repository.*;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
+import java.nio.file.FileAlreadyExistsException;
+import java.util.Optional;
+
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
 
 @ContextConfiguration(classes = {FilesService.class})
 @ExtendWith(SpringExtension.class)

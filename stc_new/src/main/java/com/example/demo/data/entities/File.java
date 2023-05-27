@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "files")
+@Entity
 public class File {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -22,5 +23,4 @@ public class File {
     @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "item_id", nullable = false)
     private Item item;
-
 }

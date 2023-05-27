@@ -27,15 +27,19 @@ public class FilesService {
     private final PermissionGroupRepository permissionGroupRepository;
 
     private final FolderRepository folderRepository;
+    private final FileRepository fileRepository;
+
+
 
     public FilesService(SpaceRepository spaceRepository, PermissionRepository permissionRepository,
                         ItemRepository itemRepository, PermissionGroupRepository permissionGroupRepository,
-                        FolderRepository folderRepository) {
+                        FolderRepository folderRepository, FileRepository fileRepository) {
         this.spaceRepository = spaceRepository;
         this.permissionRepository = permissionRepository;
         this.itemRepository = itemRepository;
         this.permissionGroupRepository = permissionGroupRepository;
         this.folderRepository = folderRepository;
+        this.fileRepository = fileRepository;
     }
 
     public FileDto createFile(FileCreateRequest request) {
@@ -60,8 +64,8 @@ public class FilesService {
         try {
             Files.copy(file.getInputStream(), this.ROOT_PATH.resolve(Objects.requireNonNull(file.getOriginalFilename())));
             File fileForInsert = new File(1L, file.getBytes(), file.getContentType(),item);
-            return null ;
-            //  filesRepository.save(fileForInsert);
+            return fileRepository.save(fileForInsert);
+
         } catch (Exception e) {
             if (e instanceof FileAlreadyExistsException) {
                 throw new RuntimeException("file already exists.");
